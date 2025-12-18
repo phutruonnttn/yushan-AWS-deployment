@@ -1,0 +1,125 @@
+output "aws_account_id" {
+  description = "AWS Account ID"
+  value       = data.aws_caller_identity.current.account_id
+}
+
+output "aws_region" {
+  description = "AWS Region"
+  value       = data.aws_region.current.name
+}
+
+output "vpc_id" {
+  description = "VPC ID"
+  value       = aws_vpc.main.id
+}
+
+output "vpc_cidr" {
+  description = "VPC CIDR block"
+  value       = aws_vpc.main.cidr_block
+}
+
+output "public_subnet_ids" {
+  description = "Public subnet IDs"
+  value       = aws_subnet.public[*].id
+}
+
+output "private_subnet_ids" {
+  description = "Private subnet IDs"
+  value       = aws_subnet.private[*].id
+}
+
+output "availability_zones" {
+  description = "Availability zones used"
+  value       = local.azs
+}
+
+output "nat_gateway_ids" {
+  description = "NAT Gateway IDs"
+  value       = aws_nat_gateway.main[*].id
+}
+
+output "internet_gateway_id" {
+  description = "Internet Gateway ID"
+  value       = aws_internet_gateway.main.id
+}
+
+output "alb_security_group_id" {
+  description = "ALB Security Group ID"
+  value       = aws_security_group.alb.id
+}
+
+output "eks_cluster_security_group_id" {
+  description = "EKS Cluster Security Group ID"
+  value       = aws_security_group.eks_cluster.id
+}
+
+output "eks_nodes_security_group_id" {
+  description = "EKS Nodes Security Group ID"
+  value       = aws_security_group.eks_nodes.id
+}
+
+output "rds_security_group_id" {
+  description = "RDS Security Group ID"
+  value       = aws_security_group.rds.id
+}
+
+output "elasticache_security_group_id" {
+  description = "ElastiCache Security Group ID"
+  value       = aws_security_group.elasticache.id
+}
+
+output "kafka_security_group_id" {
+  description = "Kafka Security Group ID"
+  value       = aws_security_group.kafka.id
+}
+
+output "eks_cluster_id" {
+  description = "EKS Cluster ID (will be populated after EKS is created in Subtask 5)"
+  value       = null
+}
+
+output "eks_cluster_endpoint" {
+  description = "EKS Cluster endpoint (will be populated after EKS is created in Subtask 5)"
+  value       = null
+}
+
+output "eks_cluster_version" {
+  description = "EKS Cluster Kubernetes version (will be populated after EKS is created in Subtask 5)"
+  value       = null
+}
+
+output "rds_instance_endpoints" {
+  description = "RDS instance endpoints (Database-per-Service) - will be populated after RDS is created in Subtask 6"
+  value       = {}
+}
+
+output "elasticache_cluster_endpoints" {
+  description = "ElastiCache cluster endpoints (Database-per-Service) - will be populated after ElastiCache is created in Subtask 7"
+  value       = {}
+}
+
+output "kafka_broker_ips" {
+  description = "Kafka broker private IPs (will be populated after Kafka is created in Subtask 8)"
+  value       = []
+}
+
+output "alb_dns_name" {
+  description = "ALB DNS name (will be populated after ALB is created in Subtask 10)"
+  value       = null
+}
+
+output "alb_arn" {
+  description = "ALB ARN (will be populated after ALB is created in Subtask 10)"
+  value       = null
+}
+
+output "s3_bucket_names" {
+  description = "S3 bucket names (will be populated after S3 is created in Subtask 9)"
+  value       = []
+}
+
+output "ecr_repository_urls" {
+  description = "ECR repository URLs (will be populated after ECR is created in Subtask 11)"
+  value       = {}
+}
+

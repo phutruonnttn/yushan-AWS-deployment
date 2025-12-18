@@ -1,0 +1,96 @@
+aws_region  = "ap-southeast-1"
+aws_profile = "yushan"
+project_name = "yushan"
+environment  = "development"
+
+eks_cluster_enabled    = true
+eks_node_instance_type = "t3.small"
+eks_node_count         = 2
+eks_node_min_size      = 2
+eks_node_max_size      = 4
+eks_multi_az           = true
+eks_use_spot_instances = false
+eks_runtime_hours      = 12
+
+rds_instance_type         = "db.t3.micro"
+rds_multi_az              = true
+rds_backup_retention      = 7
+rds_storage_encrypted     = true
+rds_database_per_service  = true
+
+rds_databases = [
+  {
+    name       = "user_service"
+    identifier = "yushan-user-db"
+  },
+  {
+    name       = "content_service"
+    identifier = "yushan-content-db"
+  },
+  {
+    name       = "analytics_service"
+    identifier = "yushan-analytics-db"
+  },
+  {
+    name       = "engagement_service"
+    identifier = "yushan-engagement-db"
+  },
+  {
+    name       = "gamification_service"
+    identifier = "yushan-gamification-db"
+  }
+]
+
+elasticache_node_type            = "cache.t3.micro"
+elasticache_multi_az             = true
+elasticache_cluster_mode         = false
+elasticache_database_per_service = true
+
+elasticache_clusters = [
+  {
+    name       = "user_service"
+    identifier = "yushan-user-redis"
+  },
+  {
+    name       = "content_service"
+    identifier = "yushan-content-redis"
+  },
+  {
+    name       = "analytics_service"
+    identifier = "yushan-analytics-redis"
+  },
+  {
+    name       = "engagement_service"
+    identifier = "yushan-engagement-redis"
+  },
+  {
+    name       = "gamification_service"
+    identifier = "yushan-gamification-redis"
+  }
+]
+
+kafka_instance_type     = "t3.small"
+kafka_count             = 3
+kafka_multi_az          = true
+kafka_replication_factor = 3
+kafka_runtime_hours      = 12
+
+alb_enabled                  = true
+alb_type                     = "application"
+alb_internal                 = false
+alb_ssl_certificate_arn      = ""
+alb_ingress_controller_enabled = true
+alb_ingress_class            = "alb"
+
+s3_versioning         = true
+s3_lifecycle_policies = true
+s3_encryption         = true
+
+cloudwatch_logs_retention = 7
+cloudwatch_alarms_enabled = true
+
+vpc_cidr            = "10.0.0.0/16"
+availability_zones  = []
+enable_nat_gateway  = true
+single_nat_gateway  = false
+
