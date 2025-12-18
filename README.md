@@ -1,9 +1,5 @@
 # AWS Deployment - Yushan Platform
 
-> 🚀 **Production-standard AWS infrastructure for Yushan Platform microservices using Terraform. EKS, RDS, ElastiCache, Kafka, ALB with Database-per-Service pattern.**
-
-**Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
-
 This repository contains Terraform infrastructure as code for deploying the Yushan Platform microservices to AWS. This is part of **Phase 3: Kubernetes & AWS Deployment** of the Yushan Platform project.
 
 ## 📁 Folder Structure
