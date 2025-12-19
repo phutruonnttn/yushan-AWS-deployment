@@ -207,13 +207,33 @@ output "kafka_broker_arns" {
 }
 
 output "alb_dns_name" {
-  description = "ALB DNS name (will be populated after ALB is created in Subtask 10)"
-  value       = null
+  description = "ALB DNS name"
+  value       = var.alb_enabled ? try(aws_lb.main[0].dns_name, null) : null
 }
 
 output "alb_arn" {
-  description = "ALB ARN (will be populated after ALB is created in Subtask 10)"
-  value       = null
+  description = "ALB ARN"
+  value       = var.alb_enabled ? try(aws_lb.main[0].arn, null) : null
+}
+
+output "alb_zone_id" {
+  description = "ALB zone ID"
+  value       = var.alb_enabled ? try(aws_lb.main[0].zone_id, null) : null
+}
+
+output "alb_target_group_arn" {
+  description = "ALB target group ARN for API Gateway"
+  value       = var.alb_enabled ? try(aws_lb_target_group.api_gateway[0].arn, null) : null
+}
+
+output "alb_https_listener_arn" {
+  description = "ALB HTTPS listener ARN"
+  value       = var.alb_enabled && var.alb_ssl_certificate_arn != "" ? try(aws_lb_listener.https[0].arn, null) : null
+}
+
+output "alb_http_listener_arn" {
+  description = "ALB HTTP listener ARN"
+  value       = var.alb_enabled ? try(aws_lb_listener.http[0].arn, null) : null
 }
 
 output "s3_bucket_names" {

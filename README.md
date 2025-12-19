@@ -65,7 +65,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 - [x] **Subtask 7**: Setup ElastiCache Redis - 5x ElastiCache Redis clusters (Database-per-Service pattern) with Multi-AZ, automatic failover, and encryption configured
 - [x] **Subtask 8**: Setup EC2 Kafka Cluster - 3x EC2 Kafka brokers (t3.small, Multi-AZ) with EBS volumes, IAM roles, and userdata script configured
 - [x] **Subtask 9**: Setup S3 Buckets - S3 bucket for content storage with versioning, encryption, CORS, bucket policies, and lifecycle policies configured
-- [ ] **Subtask 10**: Setup Application Load Balancer (ALB)
+- [x] **Subtask 10**: Setup Application Load Balancer - ALB with HTTPS/HTTP listeners, target groups, and AWS Load Balancer Controller integration configured
 - [ ] **Subtask 11**: Create ECR Repositories
 - [ ] **Subtask 12**: Update Service Configs
 - [ ] **Subtask 13**: Create K8s Manifests
@@ -109,7 +109,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 7. ✅ Setup ElastiCache Redis (5x clusters - Database-per-Service)
 8. ✅ Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
 9. ✅ Setup S3 Buckets
-10. ⏳ Setup Application Load Balancer (ALB)
+10. ✅ Setup Application Load Balancer (ALB)
 11. ⏳ Create ECR Repositories
 12. ⏳ Update Service Configs
 13. ⏳ Create K8s Manifests
@@ -226,7 +226,7 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 9 Complete - Ready for Subtask 10 (Application Load Balancer)
+**Status**: ✅ Subtask 10 Complete - Ready for Subtask 11 (ECR Repositories)
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 

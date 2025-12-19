@@ -366,6 +366,12 @@ variable "alb_ingress_class" {
   default     = "alb"
 }
 
+variable "alb_access_logs_enabled" {
+  description = "Enable access logs for ALB (stored in S3)"
+  type        = bool
+  default     = false # Disabled for cost optimization (learning environment)
+}
+
 variable "s3_versioning" {
   description = "Enable versioning for S3 buckets"
   type        = bool

@@ -49,8 +49,10 @@ resource "aws_subnet" "public" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.name_prefix}-public-subnet-${count.index + 1}"
-      Type = "public"
+      Name                                    = "${local.name_prefix}-public-subnet-${count.index + 1}"
+      Type                                    = "public"
+      "kubernetes.io/role/elb"                = "1" # Required for AWS Load Balancer Controller
+      "kubernetes.io/cluster/${local.name_prefix}-eks-cluster" = "shared" # Required for EKS
     }
   )
 }
@@ -66,8 +68,10 @@ resource "aws_subnet" "private" {
   tags = merge(
     local.common_tags,
     {
-      Name = "${local.name_prefix}-private-subnet-${count.index + 1}"
-      Type = "private"
+      Name                                    = "${local.name_prefix}-private-subnet-${count.index + 1}"
+      Type                                    = "private"
+      "kubernetes.io/role/internal-elb"       = "1" # Required for AWS Load Balancer Controller
+      "kubernetes.io/cluster/${local.name_prefix}-eks-cluster" = "shared" # Required for EKS
     }
   )
 }
