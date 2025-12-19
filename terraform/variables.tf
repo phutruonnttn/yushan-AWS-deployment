@@ -414,6 +414,24 @@ variable "cloudwatch_alarms_enabled" {
   default     = true
 }
 
+variable "ecr_image_scanning_enabled" {
+  description = "Enable image scanning on push for ECR repositories"
+  type        = bool
+  default     = true
+}
+
+variable "ecr_encryption_enabled" {
+  description = "Enable encryption for ECR repositories"
+  type        = bool
+  default     = true
+}
+
+variable "ecr_image_retention_count" {
+  description = "Number of images to retain in ECR repositories (old images will be deleted)"
+  type        = number
+  default     = 10
+}
+
 variable "vpc_cidr" {
   description = "CIDR block for VPC"
   type        = string

@@ -262,7 +262,23 @@ output "s3_content_storage_bucket_regional_domain_name" {
 }
 
 output "ecr_repository_urls" {
-  description = "ECR repository URLs (will be populated after ECR is created in Subtask 11)"
-  value       = {}
+  description = "ECR repository URLs"
+  value = {
+    for repo in local.ecr_repositories : repo => try(aws_ecr_repository.main[repo].repository_url, null)
+  }
+}
+
+output "ecr_repository_arns" {
+  description = "ECR repository ARNs"
+  value = {
+    for repo in local.ecr_repositories : repo => try(aws_ecr_repository.main[repo].arn, null)
+  }
+}
+
+output "ecr_repository_names" {
+  description = "ECR repository names"
+  value = {
+    for repo in local.ecr_repositories : repo => try(aws_ecr_repository.main[repo].name, null)
+  }
 }
 
