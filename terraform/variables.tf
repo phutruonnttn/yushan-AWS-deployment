@@ -300,6 +300,36 @@ variable "kafka_runtime_hours" {
   default     = 12
 }
 
+variable "kafka_version" {
+  description = "Kafka version to install"
+  type        = string
+  default     = "3.6.0"
+}
+
+variable "kafka_ebs_volume_size" {
+  description = "EBS volume size for Kafka data storage (GB)"
+  type        = number
+  default     = 50
+}
+
+variable "kafka_root_volume_size" {
+  description = "Root EBS volume size for Kafka instances (GB)"
+  type        = number
+  default     = 20
+}
+
+variable "kafka_enhanced_monitoring" {
+  description = "Enable enhanced monitoring for Kafka instances"
+  type        = bool
+  default     = false # Disabled for cost optimization (learning environment)
+}
+
+variable "kafka_use_elastic_ip" {
+  description = "Use Elastic IPs for Kafka brokers (for stable IPs)"
+  type        = bool
+  default     = false # Not needed for private subnets, disabled by default
+}
+
 variable "alb_enabled" {
   description = "Enable Application Load Balancer"
   type        = bool

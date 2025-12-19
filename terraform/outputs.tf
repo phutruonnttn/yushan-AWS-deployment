@@ -182,8 +182,28 @@ output "elasticache_cluster_arns" {
 }
 
 output "kafka_broker_ips" {
-  description = "Kafka broker private IPs (will be populated after Kafka is created in Subtask 8)"
-  value       = []
+  description = "Kafka broker private IPs"
+  value       = aws_instance.kafka[*].private_ip
+}
+
+output "kafka_broker_private_dns" {
+  description = "Kafka broker private DNS names"
+  value       = aws_instance.kafka[*].private_dns
+}
+
+output "kafka_broker_ids" {
+  description = "Kafka broker EC2 instance IDs"
+  value       = aws_instance.kafka[*].id
+}
+
+output "kafka_broker_endpoints" {
+  description = "Kafka broker endpoints (for bootstrap servers configuration)"
+  value       = [for instance in aws_instance.kafka : "${instance.private_ip}:9092"]
+}
+
+output "kafka_broker_arns" {
+  description = "Kafka broker EC2 instance ARNs"
+  value       = aws_instance.kafka[*].arn
 }
 
 output "alb_dns_name" {

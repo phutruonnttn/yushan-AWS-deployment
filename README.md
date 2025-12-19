@@ -63,7 +63,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 - [x] **Subtask 5**: Create EKS Cluster - EKS cluster with managed node groups, IAM roles, OIDC provider, and networking configured
 - [x] **Subtask 6**: Setup RDS PostgreSQL - 5x RDS PostgreSQL instances (Database-per-Service pattern) with Multi-AZ, encryption, and backups configured
 - [x] **Subtask 7**: Setup ElastiCache Redis - 5x ElastiCache Redis clusters (Database-per-Service pattern) with Multi-AZ, automatic failover, and encryption configured
-- [ ] **Subtask 8**: Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
+- [x] **Subtask 8**: Setup EC2 Kafka Cluster - 3x EC2 Kafka brokers (t3.small, Multi-AZ) with EBS volumes, IAM roles, and userdata script configured
 - [ ] **Subtask 9**: Setup S3 Buckets
 - [ ] **Subtask 10**: Setup Application Load Balancer (ALB)
 - [ ] **Subtask 11**: Create ECR Repositories
@@ -107,7 +107,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 5. ✅ Create EKS Cluster (Multi-AZ)
 6. ✅ Setup RDS PostgreSQL (5x instances - Database-per-Service)
 7. ✅ Setup ElastiCache Redis (5x clusters - Database-per-Service)
-8. ⏳ Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
+8. ✅ Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
 9. ⏳ Setup S3 Buckets
 10. ⏳ Setup Application Load Balancer (ALB)
 11. ⏳ Create ECR Repositories
@@ -226,7 +226,7 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 7 Complete - Ready for Subtask 8 (EC2 Kafka Cluster)
+**Status**: ✅ Subtask 8 Complete - Ready for Subtask 9 (S3 Buckets)
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 
