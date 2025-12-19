@@ -147,8 +147,38 @@ output "rds_instance_arns" {
 }
 
 output "elasticache_cluster_endpoints" {
-  description = "ElastiCache cluster endpoints (Database-per-Service) - will be populated after ElastiCache is created in Subtask 7"
-  value       = {}
+  description = "ElastiCache cluster endpoints (Database-per-Service)"
+  value = var.elasticache_database_per_service ? {
+    for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].configuration_endpoint_address, aws_elasticache_replication_group.main[cluster.name].primary_endpoint_address, null)
+  } : {}
+}
+
+output "elasticache_cluster_primary_endpoints" {
+  description = "ElastiCache cluster primary endpoints (Database-per-Service)"
+  value = var.elasticache_database_per_service ? {
+    for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].primary_endpoint_address, null)
+  } : {}
+}
+
+output "elasticache_cluster_reader_endpoints" {
+  description = "ElastiCache cluster reader endpoints (Database-per-Service) - for Multi-AZ read replicas"
+  value = var.elasticache_database_per_service ? {
+    for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].reader_endpoint_address, null)
+  } : {}
+}
+
+output "elasticache_cluster_ids" {
+  description = "ElastiCache cluster IDs (Database-per-Service)"
+  value = var.elasticache_database_per_service ? {
+    for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].id, null)
+  } : {}
+}
+
+output "elasticache_cluster_arns" {
+  description = "ElastiCache cluster ARNs (Database-per-Service)"
+  value = var.elasticache_database_per_service ? {
+    for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].arn, null)
+  } : {}
 }
 
 output "kafka_broker_ips" {

@@ -234,6 +234,42 @@ variable "elasticache_clusters" {
   ]
 }
 
+variable "elasticache_snapshot_retention_limit" {
+  description = "Number of days to retain ElastiCache snapshots"
+  type        = number
+  default     = 7
+}
+
+variable "elasticache_snapshot_window" {
+  description = "Daily time range for ElastiCache snapshots (UTC)"
+  type        = string
+  default     = "03:00-05:00"
+}
+
+variable "elasticache_maintenance_window" {
+  description = "Weekly maintenance window for ElastiCache (UTC)"
+  type        = string
+  default     = "mon:05:00-mon:07:00"
+}
+
+variable "elasticache_at_rest_encryption_enabled" {
+  description = "Enable encryption at rest for ElastiCache"
+  type        = bool
+  default     = true
+}
+
+variable "elasticache_transit_encryption_enabled" {
+  description = "Enable encryption in transit (TLS) for ElastiCache"
+  type        = bool
+  default     = false # Disabled by default (requires auth token, adds complexity)
+}
+
+variable "elasticache_log_delivery_enabled" {
+  description = "Enable CloudWatch log delivery for ElastiCache slow logs"
+  type        = bool
+  default     = false # Disabled for cost optimization (learning environment)
+}
+
 variable "kafka_instance_type" {
   description = "EC2 instance type for Kafka brokers"
   type        = string
