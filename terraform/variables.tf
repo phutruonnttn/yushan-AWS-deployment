@@ -136,6 +136,50 @@ variable "rds_databases" {
   ]
 }
 
+variable "rds_master_username" {
+  description = "Master username for RDS instances"
+  type        = string
+  default     = "postgres"
+  sensitive   = true
+}
+
+variable "rds_master_password" {
+  description = "Master password for RDS instances (should be set via terraform.tfvars or environment variable)"
+  type        = string
+  sensitive   = true
+  default     = "" # Must be provided via terraform.tfvars
+}
+
+variable "rds_allocated_storage" {
+  description = "Initial allocated storage for RDS instances (GB)"
+  type        = number
+  default     = 20
+}
+
+variable "rds_max_allocated_storage" {
+  description = "Maximum allocated storage for RDS instances (GB) - enables autoscaling"
+  type        = number
+  default     = 100
+}
+
+variable "rds_performance_insights_enabled" {
+  description = "Enable Performance Insights for RDS instances"
+  type        = bool
+  default     = false # Disabled for cost optimization (learning environment)
+}
+
+variable "rds_deletion_protection" {
+  description = "Enable deletion protection for RDS instances"
+  type        = bool
+  default     = false # Disabled for learning environment (can be enabled for production)
+}
+
+variable "rds_enhanced_monitoring_interval" {
+  description = "Enhanced monitoring interval in seconds (0 = disabled, 60 = 1 minute)"
+  type        = number
+  default     = 0 # Disabled for cost optimization (learning environment)
+}
+
 variable "elasticache_node_type" {
   description = "ElastiCache node type"
   type        = string

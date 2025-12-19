@@ -119,8 +119,31 @@ output "eks_node_group_arn" {
 }
 
 output "rds_instance_endpoints" {
-  description = "RDS instance endpoints (Database-per-Service) - will be populated after RDS is created in Subtask 6"
-  value       = {}
+  description = "RDS instance endpoints (Database-per-Service)"
+  value = var.rds_database_per_service ? {
+    for db in var.rds_databases : db.name => try(aws_db_instance.main[db.name].endpoint, null)
+  } : {}
+}
+
+output "rds_instance_addresses" {
+  description = "RDS instance addresses (Database-per-Service)"
+  value = var.rds_database_per_service ? {
+    for db in var.rds_databases : db.name => try(aws_db_instance.main[db.name].address, null)
+  } : {}
+}
+
+output "rds_instance_ids" {
+  description = "RDS instance IDs (Database-per-Service)"
+  value = var.rds_database_per_service ? {
+    for db in var.rds_databases : db.name => try(aws_db_instance.main[db.name].id, null)
+  } : {}
+}
+
+output "rds_instance_arns" {
+  description = "RDS instance ARNs (Database-per-Service)"
+  value = var.rds_database_per_service ? {
+    for db in var.rds_databases : db.name => try(aws_db_instance.main[db.name].arn, null)
+  } : {}
 }
 
 output "elasticache_cluster_endpoints" {

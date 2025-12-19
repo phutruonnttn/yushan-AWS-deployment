@@ -61,7 +61,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 - [x] **Subtask 3**: Setup VPC Infrastructure - VPC, subnets (public/private), Internet Gateway, NAT Gateway, Route Tables created
 - [x] **Subtask 4**: Setup Security Groups - Security groups for ALB, EKS, RDS, ElastiCache, and Kafka created
 - [x] **Subtask 5**: Create EKS Cluster - EKS cluster with managed node groups, IAM roles, OIDC provider, and networking configured
-- [ ] **Subtask 6**: Setup RDS PostgreSQL (5x instances - Database-per-Service)
+- [x] **Subtask 6**: Setup RDS PostgreSQL - 5x RDS PostgreSQL instances (Database-per-Service pattern) with Multi-AZ, encryption, and backups configured
 - [ ] **Subtask 7**: Setup ElastiCache Redis (5x clusters - Database-per-Service)
 - [ ] **Subtask 8**: Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
 - [ ] **Subtask 9**: Setup S3 Buckets
@@ -105,7 +105,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 3. ✅ Setup VPC Infrastructure
 4. ✅ Setup Security Groups
 5. ✅ Create EKS Cluster (Multi-AZ)
-6. ⏳ Setup RDS PostgreSQL (5x instances - Database-per-Service)
+6. ✅ Setup RDS PostgreSQL (5x instances - Database-per-Service)
 7. ⏳ Setup ElastiCache Redis (5x clusters - Database-per-Service)
 8. ⏳ Setup EC2 Kafka Cluster (3 brokers Multi-AZ)
 9. ⏳ Setup S3 Buckets
@@ -226,7 +226,7 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 5 Complete - Ready for Subtask 6 (RDS PostgreSQL)
+**Status**: ✅ Subtask 6 Complete - Ready for Subtask 7 (ElastiCache Redis)
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 
