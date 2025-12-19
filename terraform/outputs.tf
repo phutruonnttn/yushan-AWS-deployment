@@ -74,18 +74,48 @@ output "kafka_security_group_id" {
 }
 
 output "eks_cluster_id" {
-  description = "EKS Cluster ID (will be populated after EKS is created in Subtask 5)"
-  value       = null
+  description = "EKS Cluster ID"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].id, null) : null
+}
+
+output "eks_cluster_name" {
+  description = "EKS Cluster name"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].name, null) : null
 }
 
 output "eks_cluster_endpoint" {
-  description = "EKS Cluster endpoint (will be populated after EKS is created in Subtask 5)"
-  value       = null
+  description = "EKS Cluster endpoint"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].endpoint, null) : null
 }
 
 output "eks_cluster_version" {
-  description = "EKS Cluster Kubernetes version (will be populated after EKS is created in Subtask 5)"
-  value       = null
+  description = "EKS Cluster Kubernetes version"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].version, null) : null
+}
+
+output "eks_cluster_arn" {
+  description = "EKS Cluster ARN"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].arn, null) : null
+}
+
+output "eks_cluster_certificate_authority_data" {
+  description = "EKS Cluster certificate authority data (for kubectl config)"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].certificate_authority[0].data, null) : null
+}
+
+output "eks_cluster_oidc_issuer_url" {
+  description = "EKS Cluster OIDC issuer URL (for AWS Load Balancer Controller)"
+  value       = var.eks_cluster_enabled ? try(aws_eks_cluster.main[0].identity[0].oidc[0].issuer, null) : null
+}
+
+output "eks_node_group_id" {
+  description = "EKS Node Group ID"
+  value       = var.eks_cluster_enabled ? try(aws_eks_node_group.main[0].id, null) : null
+}
+
+output "eks_node_group_arn" {
+  description = "EKS Node Group ARN"
+  value       = var.eks_cluster_enabled ? try(aws_eks_node_group.main[0].arn, null) : null
 }
 
 output "rds_instance_endpoints" {

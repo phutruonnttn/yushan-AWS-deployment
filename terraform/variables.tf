@@ -70,6 +70,12 @@ variable "eks_runtime_hours" {
   default     = 12
 }
 
+variable "eks_node_ssh_key_name" {
+  description = "EC2 Key Pair name for SSH access to EKS nodes (optional, leave empty for no SSH access)"
+  type        = string
+  default     = ""
+}
+
 variable "rds_instance_type" {
   description = "RDS instance type"
   type        = string
