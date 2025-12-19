@@ -1,0 +1,6 @@
+# Terraform outputs (may contain sensitive data)
+terraform-outputs.json
+
+# Example configs (for reference only)
+*.example.yml
+

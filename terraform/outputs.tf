@@ -125,6 +125,32 @@ output "rds_instance_endpoints" {
   } : {}
 }
 
+# Individual RDS endpoints for easy access
+output "rds_user_service_endpoint" {
+  description = "RDS endpoint for user-service"
+  value       = var.rds_database_per_service ? try(aws_db_instance.main["user-service"].endpoint, null) : null
+}
+
+output "rds_content_service_endpoint" {
+  description = "RDS endpoint for content-service"
+  value       = var.rds_database_per_service ? try(aws_db_instance.main["content-service"].endpoint, null) : null
+}
+
+output "rds_engagement_service_endpoint" {
+  description = "RDS endpoint for engagement-service"
+  value       = var.rds_database_per_service ? try(aws_db_instance.main["engagement-service"].endpoint, null) : null
+}
+
+output "rds_gamification_service_endpoint" {
+  description = "RDS endpoint for gamification-service"
+  value       = var.rds_database_per_service ? try(aws_db_instance.main["gamification-service"].endpoint, null) : null
+}
+
+output "rds_analytics_service_endpoint" {
+  description = "RDS endpoint for analytics-service"
+  value       = var.rds_database_per_service ? try(aws_db_instance.main["analytics-service"].endpoint, null) : null
+}
+
 output "rds_instance_addresses" {
   description = "RDS instance addresses (Database-per-Service)"
   value = var.rds_database_per_service ? {
@@ -151,6 +177,32 @@ output "elasticache_cluster_endpoints" {
   value = var.elasticache_database_per_service ? {
     for cluster in var.elasticache_clusters : cluster.name => try(aws_elasticache_replication_group.main[cluster.name].configuration_endpoint_address, aws_elasticache_replication_group.main[cluster.name].primary_endpoint_address, null)
   } : {}
+}
+
+# Individual ElastiCache endpoints for easy access
+output "elasticache_user_service_endpoint" {
+  description = "ElastiCache endpoint for user-service"
+  value       = var.elasticache_database_per_service ? try(aws_elasticache_replication_group.main["user-service"].primary_endpoint_address, null) : null
+}
+
+output "elasticache_content_service_endpoint" {
+  description = "ElastiCache endpoint for content-service"
+  value       = var.elasticache_database_per_service ? try(aws_elasticache_replication_group.main["content-service"].primary_endpoint_address, null) : null
+}
+
+output "elasticache_engagement_service_endpoint" {
+  description = "ElastiCache endpoint for engagement-service"
+  value       = var.elasticache_database_per_service ? try(aws_elasticache_replication_group.main["engagement-service"].primary_endpoint_address, null) : null
+}
+
+output "elasticache_gamification_service_endpoint" {
+  description = "ElastiCache endpoint for gamification-service"
+  value       = var.elasticache_database_per_service ? try(aws_elasticache_replication_group.main["gamification-service"].primary_endpoint_address, null) : null
+}
+
+output "elasticache_analytics_service_endpoint" {
+  description = "ElastiCache endpoint for analytics-service"
+  value       = var.elasticache_database_per_service ? try(aws_elasticache_replication_group.main["analytics-service"].primary_endpoint_address, null) : null
 }
 
 output "elasticache_cluster_primary_endpoints" {
@@ -199,6 +251,11 @@ output "kafka_broker_ids" {
 output "kafka_broker_endpoints" {
   description = "Kafka broker endpoints (for bootstrap servers configuration)"
   value       = [for instance in aws_instance.kafka : "${instance.private_ip}:9092"]
+}
+
+output "kafka_bootstrap_servers" {
+  description = "Kafka bootstrap servers (comma-separated list for Spring Kafka configuration)"
+  value       = join(",", [for instance in aws_instance.kafka : "${instance.private_ip}:9092"])
 }
 
 output "kafka_broker_arns" {

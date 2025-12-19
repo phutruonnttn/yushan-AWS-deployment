@@ -67,7 +67,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 - [x] **Subtask 9**: Setup S3 Buckets - S3 bucket for content storage with versioning, encryption, CORS, bucket policies, and lifecycle policies configured
 - [x] **Subtask 10**: Setup Application Load Balancer - ALB with HTTPS/HTTP listeners, target groups, and AWS Load Balancer Controller integration configured
 - [x] **Subtask 11**: Create ECR Repositories - ECR repositories for all 6 microservices with image scanning, encryption, lifecycle policies, and EKS access policies
-- [ ] **Subtask 12**: Update Service Configs
+- [x] **Subtask 12**: Update Service Configs - Created SERVICE_CONFIGS_GUIDE.md with detailed instructions, example configs, and extract-aws-endpoints.sh script for extracting Terraform outputs
 - [ ] **Subtask 13**: Create K8s Manifests
 - [ ] **Subtask 14**: Testing & Validation
 
@@ -111,7 +111,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 9. ✅ Setup S3 Buckets
 10. ✅ Setup Application Load Balancer (ALB)
 11. ✅ Create ECR Repositories
-12. ⏳ Update Service Configs
+12. ✅ Update Service Configs
 13. ⏳ Create K8s Manifests
 14. ⏳ Testing & Validation
 
@@ -226,7 +226,7 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 11 Complete - Ready for Subtask 12 (Update Service Configs)
+**Status**: ✅ Subtask 12 Complete - Ready for Subtask 13 (Create K8s Manifests)
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 
