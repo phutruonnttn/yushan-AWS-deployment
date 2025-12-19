@@ -217,8 +217,28 @@ output "alb_arn" {
 }
 
 output "s3_bucket_names" {
-  description = "S3 bucket names (will be populated after S3 is created in Subtask 9)"
-  value       = []
+  description = "S3 bucket names"
+  value       = [aws_s3_bucket.content_storage.id]
+}
+
+output "s3_content_storage_bucket_name" {
+  description = "S3 content storage bucket name"
+  value       = aws_s3_bucket.content_storage.id
+}
+
+output "s3_content_storage_bucket_arn" {
+  description = "S3 content storage bucket ARN"
+  value       = aws_s3_bucket.content_storage.arn
+}
+
+output "s3_content_storage_bucket_domain_name" {
+  description = "S3 content storage bucket domain name"
+  value       = aws_s3_bucket.content_storage.bucket_domain_name
+}
+
+output "s3_content_storage_bucket_regional_domain_name" {
+  description = "S3 content storage bucket regional domain name"
+  value       = aws_s3_bucket.content_storage.bucket_regional_domain_name
 }
 
 output "ecr_repository_urls" {

@@ -384,6 +384,18 @@ variable "s3_encryption" {
   default     = true
 }
 
+variable "s3_cors_allowed_origins" {
+  description = "Allowed origins for S3 CORS configuration"
+  type        = list(string)
+  default     = ["*"] # Should be restricted to specific domains in production
+}
+
+variable "s3_notifications_enabled" {
+  description = "Enable S3 bucket notifications (for event-driven processing)"
+  type        = bool
+  default     = false # Disabled by default (can be enabled for Lambda triggers)
+}
+
 variable "cloudwatch_logs_retention" {
   description = "CloudWatch logs retention period in days"
   type        = number
