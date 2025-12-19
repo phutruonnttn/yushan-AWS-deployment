@@ -68,7 +68,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 - [x] **Subtask 10**: Setup Application Load Balancer - ALB with HTTPS/HTTP listeners, target groups, and AWS Load Balancer Controller integration configured
 - [x] **Subtask 11**: Create ECR Repositories - ECR repositories for all 6 microservices with image scanning, encryption, lifecycle policies, and EKS access policies
 - [x] **Subtask 12**: Update Service Configs - Created SERVICE_CONFIGS_GUIDE.md with detailed instructions, example configs, and extract-aws-endpoints.sh script for extracting Terraform outputs
-- [ ] **Subtask 13**: Create K8s Manifests
+- [x] **Subtask 13**: Create K8s Manifests - Created Kubernetes manifests for all 6 services (Deployments, Services, Ingress), ConfigMaps, Secrets templates, and comprehensive README
 - [ ] **Subtask 14**: Testing & Validation
 
 ---
@@ -112,7 +112,7 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 10. ✅ Setup Application Load Balancer (ALB)
 11. ✅ Create ECR Repositories
 12. ✅ Update Service Configs
-13. ⏳ Create K8s Manifests
+13. ✅ Create K8s Manifests
 14. ⏳ Testing & Validation
 
 **Phase 2: Kubernetes Migration (Task 2)**
@@ -226,7 +226,7 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 12 Complete - Ready for Subtask 13 (Create K8s Manifests)
+**Status**: ✅ Subtask 13 Complete - Ready for Subtask 14 (Testing & Validation)
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 

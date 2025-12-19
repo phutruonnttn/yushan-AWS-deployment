@@ -1,0 +1,118 @@
+# Content Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: content-service
+  namespace: yushan
+  labels:
+    app: content-service
+    component: business
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: content-service
+  template:
+    metadata:
+      labels:
+        app: content-service
+        component: business
+    spec:
+      containers:
+      - name: content-service
+        image: # Will be replaced with ECR URL: <account-id>.dkr.ecr.<region>.amazonaws.com/yushan-development-content-service:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8082
+          protocol: TCP
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "kubernetes,aws"
+        - name: CONFIG_SERVER_URI
+          value: "http://config-server:8888"
+        - name: EUREKA_URL
+          value: "http://service-registry:8761/eureka/"
+        - name: GATEWAY_HMAC_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: gateway-secrets
+              key: hmac-secret
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: database-config
+              key: content-service-db-host
+        - name: DB_NAME
+          value: "content_service"
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: password
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: redis-config
+              key: content-service-redis-host
+        - name: REDIS_PORT
+          value: "6379"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: bootstrap-servers
+        - name: S3_BUCKET_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: s3-config
+              key: content-storage-bucket
+        - name: AWS_REGION
+          value: "ap-southeast-1"
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: aws-secrets
+              key: access-key-id
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-secrets
+              key: secret-access-key
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8082
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+

@@ -1,0 +1,10 @@
+# Kubernetes Namespace for Yushan Platform
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: yushan
+  labels:
+    name: yushan
+    environment: development
+    managed-by: terraform
+

@@ -1,0 +1,20 @@
+# Gamification Service Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: gamification-service
+  namespace: yushan
+  labels:
+    app: gamification-service
+    component: business
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8085
+    targetPort: 8085
+    protocol: TCP
+  selector:
+    app: gamification-service
+  sessionAffinity: None
+

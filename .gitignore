@@ -47,3 +47,8 @@ logs/
 *.bak
 *.backup
 
+# Kubernetes Secrets
+kubernetes/secrets.yaml
+**/secrets.yaml
+!**/secrets.yaml.example
+

@@ -1,0 +1,51 @@
+# ConfigMaps for AWS Endpoints
+# NOTE: Replace placeholder values with actual AWS endpoints from Terraform outputs
+# Run: ./scripts/extract-aws-endpoints.sh to get endpoints
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-config
+  namespace: yushan
+data:
+  # RDS PostgreSQL Endpoints (replace with actual endpoints)
+  user-service-db-host: "REPLACE_WITH_RDS_USER_SERVICE_ENDPOINT"
+  content-service-db-host: "REPLACE_WITH_RDS_CONTENT_SERVICE_ENDPOINT"
+  engagement-service-db-host: "REPLACE_WITH_RDS_ENGAGEMENT_SERVICE_ENDPOINT"
+  gamification-service-db-host: "REPLACE_WITH_RDS_GAMIFICATION_SERVICE_ENDPOINT"
+  analytics-service-db-host: "REPLACE_WITH_RDS_ANALYTICS_SERVICE_ENDPOINT"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-config
+  namespace: yushan
+data:
+  # ElastiCache Redis Endpoints (replace with actual endpoints)
+  user-service-redis-host: "REPLACE_WITH_REDIS_USER_SERVICE_ENDPOINT"
+  content-service-redis-host: "REPLACE_WITH_REDIS_CONTENT_SERVICE_ENDPOINT"
+  engagement-service-redis-host: "REPLACE_WITH_REDIS_ENGAGEMENT_SERVICE_ENDPOINT"
+  gamification-service-redis-host: "REPLACE_WITH_REDIS_GAMIFICATION_SERVICE_ENDPOINT"
+  analytics-service-redis-host: "REPLACE_WITH_REDIS_ANALYTICS_SERVICE_ENDPOINT"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-config
+  namespace: yushan
+data:
+  # Kafka Bootstrap Servers (replace with actual endpoints)
+  bootstrap-servers: "REPLACE_WITH_KAFKA_BOOTSTRAP_SERVERS"
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: s3-config
+  namespace: yushan
+data:
+  # S3 Bucket Names (replace with actual bucket name)
+  content-storage-bucket: "REPLACE_WITH_S3_CONTENT_STORAGE_BUCKET_NAME"
+

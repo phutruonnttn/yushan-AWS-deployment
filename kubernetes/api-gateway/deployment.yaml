@@ -1,0 +1,77 @@
+# API Gateway Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: yushan
+  labels:
+    app: api-gateway
+    component: infrastructure
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+        component: infrastructure
+    spec:
+      containers:
+      - name: api-gateway
+        image: # Will be replaced with ECR URL: <account-id>.dkr.ecr.<region>.amazonaws.com/yushan-development-api-gateway:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "kubernetes,aws"
+        - name: CONFIG_SERVER_URI
+          value: "http://config-server:8888"
+        - name: EUREKA_URL
+          value: "http://service-registry:8761/eureka/"
+        - name: GATEWAY_HMAC_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: gateway-secrets
+              key: hmac-secret
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: gateway-secrets
+              key: jwt-secret
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+
