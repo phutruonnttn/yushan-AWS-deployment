@@ -49,7 +49,7 @@ resource "aws_db_instance" "main" {
 
   # Engine configuration
   engine         = "postgres"
-  engine_version = "15.4" # Latest stable PostgreSQL 15 version
+  engine_version = "15.15" # Latest PostgreSQL 15 version available in ap-southeast-1
   instance_class = var.rds_instance_type
 
   # Database configuration
@@ -68,7 +68,11 @@ resource "aws_db_instance" "main" {
   multi_az = var.rds_multi_az
 
   # Backup configuration
-  backup_retention_period = var.rds_backup_retention
+  # Free Tier limit: 1 day backup retention (not 7 days)
+  # Set to 1 for free tier, or 7 for production (requires account upgrade)
+  # Free Tier limit: 1 day backup retention (not 7 days)
+  # For free tier accounts, set to 1. For production, can use 7 (requires account upgrade)
+  backup_retention_period = var.rds_backup_retention > 1 ? 1 : var.rds_backup_retention > 1 ? 1 : var.rds_backup_retention
   backup_window          = "03:00-04:00" # UTC time
   maintenance_window     = "mon:04:00-mon:05:00" # UTC time
 

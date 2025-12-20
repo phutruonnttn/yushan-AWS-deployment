@@ -1,0 +1,24 @@
+# Elasticsearch Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: yushan
+  labels:
+    app: elasticsearch
+    component: infrastructure
+spec:
+  type: ClusterIP  # Internal only
+  ports:
+  - name: http
+    port: 9200
+    targetPort: 9200
+    protocol: TCP
+  - name: transport
+    port: 9300
+    targetPort: 9300
+    protocol: TCP
+  selector:
+    app: elasticsearch
+  sessionAffinity: None
+

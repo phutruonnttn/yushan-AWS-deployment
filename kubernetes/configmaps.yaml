@@ -8,12 +8,17 @@ metadata:
   name: database-config
   namespace: yushan
 data:
-  # RDS PostgreSQL Endpoints (replace with actual endpoints)
-  user-service-db-host: "REPLACE_WITH_RDS_USER_SERVICE_ENDPOINT"
-  content-service-db-host: "REPLACE_WITH_RDS_CONTENT_SERVICE_ENDPOINT"
-  engagement-service-db-host: "REPLACE_WITH_RDS_ENGAGEMENT_SERVICE_ENDPOINT"
-  gamification-service-db-host: "REPLACE_WITH_RDS_GAMIFICATION_SERVICE_ENDPOINT"
-  analytics-service-db-host: "REPLACE_WITH_RDS_ANALYTICS_SERVICE_ENDPOINT"
+  # RDS PostgreSQL Endpoints (replace with actual endpoints from Terraform outputs)
+  user-service-db-host: "REPLACE_WITH_USER_SERVICE_DB_ENDPOINT"
+  user-service-db-url: "jdbc:postgresql://REPLACE_WITH_USER_SERVICE_DB_ENDPOINT:5432/user_service"
+  content-service-db-host: "REPLACE_WITH_CONTENT_SERVICE_DB_ENDPOINT"
+  content-service-db-url: "jdbc:postgresql://REPLACE_WITH_CONTENT_SERVICE_DB_ENDPOINT:5432/content_service"
+  engagement-service-db-host: "REPLACE_WITH_ENGAGEMENT_SERVICE_DB_ENDPOINT"
+  engagement-service-db-url: "jdbc:postgresql://REPLACE_WITH_ENGAGEMENT_SERVICE_DB_ENDPOINT:5432/engagement_service"
+  gamification-service-db-host: "REPLACE_WITH_GAMIFICATION_SERVICE_DB_ENDPOINT"
+  gamification-service-db-url: "jdbc:postgresql://REPLACE_WITH_GAMIFICATION_SERVICE_DB_ENDPOINT:5432/gamification_service"
+  analytics-service-db-host: "REPLACE_WITH_ANALYTICS_SERVICE_DB_ENDPOINT"
+  analytics-service-db-url: "jdbc:postgresql://REPLACE_WITH_ANALYTICS_SERVICE_DB_ENDPOINT:5432/analytics_service"
 
 ---
 apiVersion: v1
@@ -22,12 +27,12 @@ metadata:
   name: redis-config
   namespace: yushan
 data:
-  # ElastiCache Redis Endpoints (replace with actual endpoints)
-  user-service-redis-host: "REPLACE_WITH_REDIS_USER_SERVICE_ENDPOINT"
-  content-service-redis-host: "REPLACE_WITH_REDIS_CONTENT_SERVICE_ENDPOINT"
-  engagement-service-redis-host: "REPLACE_WITH_REDIS_ENGAGEMENT_SERVICE_ENDPOINT"
-  gamification-service-redis-host: "REPLACE_WITH_REDIS_GAMIFICATION_SERVICE_ENDPOINT"
-  analytics-service-redis-host: "REPLACE_WITH_REDIS_ANALYTICS_SERVICE_ENDPOINT"
+  # ElastiCache Redis Endpoints (replace with actual endpoints from Terraform outputs)
+  user-service-redis-host: "REPLACE_WITH_USER_SERVICE_REDIS_ENDPOINT"
+  content-service-redis-host: "REPLACE_WITH_CONTENT_SERVICE_REDIS_ENDPOINT"
+  engagement-service-redis-host: "REPLACE_WITH_ENGAGEMENT_SERVICE_REDIS_ENDPOINT"
+  gamification-service-redis-host: "REPLACE_WITH_GAMIFICATION_SERVICE_REDIS_ENDPOINT"
+  analytics-service-redis-host: "REPLACE_WITH_ANALYTICS_SERVICE_REDIS_ENDPOINT"
 
 ---
 apiVersion: v1
@@ -36,7 +41,7 @@ metadata:
   name: kafka-config
   namespace: yushan
 data:
-  # Kafka Bootstrap Servers (replace with actual endpoints)
+  # Kafka Bootstrap Servers (replace with actual private IPs from Terraform outputs)
   bootstrap-servers: "REPLACE_WITH_KAFKA_BOOTSTRAP_SERVERS"
 
 ---
@@ -46,6 +51,6 @@ metadata:
   name: s3-config
   namespace: yushan
 data:
-  # S3 Bucket Names (replace with actual bucket name)
-  content-storage-bucket: "REPLACE_WITH_S3_CONTENT_STORAGE_BUCKET_NAME"
+  # S3 Bucket Names
+  content-storage-bucket: "yushan-development-content-storage"
 

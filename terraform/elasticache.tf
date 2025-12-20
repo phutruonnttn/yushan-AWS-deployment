@@ -51,7 +51,7 @@ resource "aws_elasticache_replication_group" "main" {
     for cluster in var.elasticache_clusters : cluster.name => cluster
   } : {}
 
-  replication_group_id       = "${local.name_prefix}-${each.value.identifier}"
+  replication_group_id       = "${var.project_name}-${var.environment}-${replace(each.value.name, "_", "-")}"
   description                = "ElastiCache Redis cluster for ${each.value.name} (Database-per-Service)"
   num_cache_clusters          = var.elasticache_multi_az ? 2 : 1 # Primary + Replica for Multi-AZ
   automatic_failover_enabled  = var.elasticache_multi_az

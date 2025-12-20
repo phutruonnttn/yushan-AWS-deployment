@@ -77,6 +77,8 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
 
 - [AWS_DEPLOYMENT_PREREQUISITES.md](./AWS_DEPLOYMENT_PREREQUISITES.md) - Prerequisites checklist and IAM User setup
 - [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md) - Production-standard architecture with Database-per-Service pattern, cost breakdown (12 hours/day), and resource lifecycle
+- [SERVICE_URLS.md](./SERVICE_URLS.md) - **Service URLs and Swagger UI access** (updated with current LoadBalancer URLs)
+- [KUBERNETES_SERVICE_TYPES.md](./KUBERNETES_SERVICE_TYPES.md) - Explanation of LoadBalancer vs ClusterIP service types
 
 ---
 
@@ -181,11 +183,16 @@ Read: [AWS_ARCHITECTURE.md](./AWS_ARCHITECTURE.md)
   - ✅ Production-grade load handling
   - ⚠️ NOT using 1x t3.micro (learning only, no HA, cannot handle load)
 - ALB: $0.54/day (always-on)
+- **LoadBalancers (6x)**: ~$4.00/day (always-on) ⚠️ **Temporary for testing**
 - Data Transfer & CloudWatch: ~$0.20/day
 
-**Total: ~$7.48/day × 7 days = ~$52.36** ✅ (within $100 credit, 48% remaining)
+**Current Total: ~$11.48/day × 7 days = ~$80.36** ⚠️ (with 6 LoadBalancers for testing)
+
+**Recommended Total (ClusterIP): ~$7.48/day × 7 days = ~$52.36** ✅ (within $100 credit, 48% remaining)
 
 **Schedule:** 8 AM - 8 PM (12 hours/day)
+
+**Note**: Current setup uses 6 LoadBalancers for testing Swagger UI. Switch to ClusterIP after testing to save ~$28/week.
 
 ---
 
@@ -226,7 +233,40 @@ For complete Phase 3 documentation, see: [Phase 3 README](https://github.com/phu
 
 ---
 
-**Status**: ✅ Subtask 14 Complete - All Infrastructure Subtasks Completed! 🎉
+## 🚀 Deployment Status
+
+### Current Deployment Configuration
+
+**Services Deployed:**
+- ✅ API Gateway: 2 replicas, LoadBalancer
+- ✅ User Service: 2 replicas, LoadBalancer (temporary for testing)
+- ✅ Content Service: 2 replicas, LoadBalancer (temporary for testing)
+- ✅ Analytics Service: 2 replicas, LoadBalancer (temporary for testing)
+- ✅ Engagement Service: 2 replicas, LoadBalancer (temporary for testing)
+- ✅ Gamification Service: 2 replicas, LoadBalancer (temporary for testing)
+
+**Service Types:**
+- ⚠️ **Temporary Setup**: All services are exposed via LoadBalancer for testing Swagger UI
+- 💰 **Cost Impact**: ~$120/month for 6 LoadBalancers (not recommended for production)
+- ✅ **Recommended**: Use ClusterIP for microservices, only API Gateway as LoadBalancer (~$20/month)
+
+**Access URLs:**
+- See [SERVICE_URLS.md](./SERVICE_URLS.md) for all Swagger UI URLs and service endpoints
+- Run `./scripts/list-service-urls.sh` to get current URLs
+
+**Configuration:**
+- All services use `docker` Spring profile (same as Digital Ocean deployment)
+- Database-per-Service pattern: 5x RDS PostgreSQL instances
+- Redis-per-Service pattern: 5x ElastiCache Redis clusters
+- Kafka: 3 brokers (t3.small, Multi-AZ) for HA and load handling
+- Kubernetes Service Discovery (Eureka replaced)
+
+**Note**: After testing, consider switching microservices back to ClusterIP to save costs. See [KUBERNETES_SERVICE_TYPES.md](./KUBERNETES_SERVICE_TYPES.md) for details.
+
+---
+
+**Status**: ✅ Subtask 14 Complete - All Infrastructure Subtasks Completed! 🎉  
+**Deployment**: ✅ All services deployed and running
 
 **Repository**: [yushan-AWS-deployment](https://github.com/phutruonnttn/yushan-AWS-deployment)
 

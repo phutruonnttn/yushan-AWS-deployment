@@ -8,7 +8,7 @@ metadata:
     app: gamification-service
     component: business
 spec:
-  type: ClusterIP
+  type: LoadBalancer  # Temporary for testing Swagger UI
   ports:
   - name: http
     port: 8085
@@ -17,4 +17,3 @@ spec:
   selector:
     app: gamification-service
   sessionAffinity: None
-

@@ -129,7 +129,7 @@ resource "aws_lb_listener" "http" {
 # Note: This will be connected to EKS API Gateway service via AWS Load Balancer Controller
 resource "aws_lb_target_group" "api_gateway" {
   count                = var.alb_enabled ? 1 : 0
-  name                 = "${local.name_prefix}-api-gateway-tg"
+  name                 = "${var.project_name}-${var.environment}-api-gw-tg"
   port                 = 8080
   protocol             = "HTTP"
   vpc_id               = aws_vpc.main.id

@@ -102,7 +102,7 @@ resource "aws_instance" "kafka" {
   # Storage - root volume
   root_block_device {
     volume_type = "gp3"
-    volume_size = var.kafka_root_volume_size
+    volume_size = max(var.kafka_root_volume_size, 30) # Minimum 30GB for Amazon Linux 2023 AMI
     encrypted   = true
 
     tags = merge(

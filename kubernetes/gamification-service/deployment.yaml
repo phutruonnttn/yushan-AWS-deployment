@@ -8,7 +8,7 @@ metadata:
     app: gamification-service
     component: business
 spec:
-  replicas: 2
+  replicas: 1  # Reduced to 1 to save memory
   selector:
     matchLabels:
       app: gamification-service
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: gamification-service
-        image: # Will be replaced with ECR URL: <account-id>.dkr.ecr.<region>.amazonaws.com/yushan-development-gamification-service:latest
+        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-gamification-service:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -28,16 +28,34 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "kubernetes,aws"
+          value: "docker"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
-        - name: EUREKA_URL
-          value: "http://service-registry:8761/eureka/"
+          value: ""  # Disabled - using local config
+        - name: EUREKA_CLIENT_ENABLED
+          value: "false"  # Disabled - using Kubernetes service discovery
         - name: GATEWAY_HMAC_SECRET
           valueFrom:
             secretKeyRef:
               name: gateway-secrets
               key: hmac-secret
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: gateway-secrets
+              key: jwt-secret
+        - name: JWT_ISSUER
+          value: "yushan-micro-service"
+        - name: JWT_ALGORITHM
+          value: "HS256"
+        - name: JWT_ACCESS_TOKEN_EXPIRATION
+          value: "3600000"
+        - name: JWT_REFRESH_TOKEN_EXPIRATION
+          value: "86400000"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: database-config
+              key: gamification-service-db-url
         - name: DB_HOST
           valueFrom:
             configMapKeyRef:
@@ -45,11 +63,21 @@ spec:
               key: gamification-service-db-host
         - name: DB_NAME
           value: "gamification_service"
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: username
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
               name: database-secrets
               key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: password
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -67,12 +95,25 @@ spec:
             configMapKeyRef:
               name: kafka-config
               key: bootstrap-servers
+        - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: bootstrap-servers
+        - name: MAIL_HOST
+          value: "smtp.gmail.com"
+        - name: MAIL_PORT
+          value: "465"
+        - name: MAIL_USERNAME
+          value: ""
+        - name: MAIL_PASSWORD
+          value: ""
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "250m"
+            memory: "256Mi"
+            cpu: "100m"
           limits:
-            memory: "1Gi"
+            memory: "512Mi"
             cpu: "500m"
         livenessProbe:
           httpGet:
@@ -98,4 +139,3 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 30
-

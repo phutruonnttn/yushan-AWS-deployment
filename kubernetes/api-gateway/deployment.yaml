@@ -8,7 +8,7 @@ metadata:
     app: api-gateway
     component: infrastructure
 spec:
-  replicas: 2
+  replicas: 1  # Reduced to 1 to save memory
   selector:
     matchLabels:
       app: api-gateway
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: # Will be replaced with ECR URL: <account-id>.dkr.ecr.<region>.amazonaws.com/yushan-development-api-gateway:latest
+        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-api-gateway:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -28,11 +28,11 @@ spec:
           protocol: TCP
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "kubernetes,aws"
+          value: "docker"
         - name: CONFIG_SERVER_URI
-          value: "http://config-server:8888"
-        - name: EUREKA_URL
-          value: "http://service-registry:8761/eureka/"
+          value: ""  # Disabled - using local config
+        - name: EUREKA_CLIENT_ENABLED
+          value: "false"  # Disabled - using Kubernetes service discovery
         - name: GATEWAY_HMAC_SECRET
           valueFrom:
             secretKeyRef:
@@ -43,12 +43,35 @@ spec:
             secretKeyRef:
               name: gateway-secrets
               key: jwt-secret
+        - name: JWT_ISSUER
+          value: "yushan-micro-service"
+        - name: JWT_ALGORITHM
+          value: "HS256"
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: redis-config
+              key: user-service-redis-host  # Using user-service Redis for gateway blocklist
+        - name: REDIS_PORT
+          value: "6379"
+        - name: KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: bootstrap-servers
+        - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: bootstrap-servers
+        - name: USER_SERVICE_URL
+          value: "http://user-service:8081"
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "250m"
+            memory: "256Mi"
+            cpu: "100m"
           limits:
-            memory: "1Gi"
+            memory: "512Mi"
             cpu: "500m"
         livenessProbe:
           httpGet:
@@ -74,4 +97,3 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 30
-

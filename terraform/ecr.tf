@@ -18,6 +18,7 @@ resource "aws_ecr_repository" "main" {
   name     = "${local.name_prefix}-${each.value}"
 
   image_tag_mutability = "MUTABLE" # Allow overwriting tags
+  force_delete        = true       # Force delete even if repository contains images
 
   # Image scanning configuration (for security)
   image_scanning_configuration {

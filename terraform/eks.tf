@@ -83,7 +83,7 @@ resource "aws_eks_cluster" "main" {
   count    = var.eks_cluster_enabled ? 1 : 0
   name     = "${local.name_prefix}-eks-cluster"
   role_arn = aws_iam_role.eks_cluster[0].arn
-  version  = "1.28" # Latest stable version
+  version  = "1.28" # Keep 1.28 (cluster already exists with this version, cannot downgrade)
 
   vpc_config {
     subnet_ids              = aws_subnet.private[*].id
@@ -187,6 +187,7 @@ resource "aws_eks_node_group" "main" {
   # Instance configuration
   instance_types = [var.eks_node_instance_type]
   capacity_type  = var.eks_use_spot_instances ? "SPOT" : "ON_DEMAND"
+  ami_type       = "AL2_x86_64" # Amazon Linux 2 (auto-selects compatible AMI for cluster version)
 
   # Scaling configuration
   scaling_config {
