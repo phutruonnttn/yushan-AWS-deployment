@@ -13,6 +13,9 @@ terraform/*_override.tf
 terraform/*_override.tf.json
 terraform/.terraformrc
 terraform/terraform.rc
+terraform/tfplan
+terraform/tfplan-*
+terraform/*.tfplan
 
 # AWS credentials and secrets
 *.pem
