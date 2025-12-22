@@ -42,7 +42,27 @@ kubernetes/
 3. **AWS Load Balancer Controller**: Installed in EKS cluster
 4. **ECR Images**: Docker images pushed to ECR repositories
 
-### Step 1: Get AWS Endpoints
+### Step 1: Create Kubernetes Secrets
+
+```bash
+# Setup all required secrets (database, gateway, mail, aws)
+cd ../scripts
+./setup-kubernetes-secrets.sh
+```
+
+This script will interactively prompt you for:
+- Database credentials (username, password)
+- Gateway secrets (HMAC secret, JWT secret)
+- Mail credentials (email address, App Password)
+- AWS credentials (optional, for S3 access)
+
+**Note**: For Gmail, you need to generate an App Password:
+1. Go to: https://myaccount.google.com/apppasswords
+2. Enable 2-Step Verification
+3. Generate App Password for 'Mail'
+4. Copy the 16-character password
+
+### Step 2: Get AWS Endpoints
 
 ```bash
 # Extract AWS endpoints from Terraform outputs
@@ -50,7 +70,7 @@ cd ../scripts
 ./extract-aws-endpoints.sh
 ```
 
-### Step 2: Update ConfigMaps
+### Step 3: Update ConfigMaps
 
 Edit `configmaps.yaml` and replace placeholder values with actual AWS endpoints:
 
@@ -71,9 +91,11 @@ terraform output kafka_bootstrap_servers
 terraform output s3_content_storage_bucket_name
 ```
 
-### Step 3: Create Secrets
+### Step 3: Create Secrets (Alternative - Manual)
 
 **IMPORTANT**: Never commit actual secrets to Git!
+
+If you prefer to create secrets manually instead of using the script:
 
 ```bash
 # Create database secrets
@@ -88,7 +110,13 @@ kubectl create secret generic gateway-secrets \
   --from-literal=jwt-secret=your-jwt-secret-key \
   --namespace=yushan
 
-# Create AWS secrets (for S3 access)
+# Create mail secrets (for email verification)
+kubectl create secret generic mail-secrets \
+  --from-literal=username=your-email@gmail.com \
+  --from-literal=password=your-app-password \
+  --namespace=yushan
+
+# Create AWS secrets (for S3 access - optional)
 kubectl create secret generic aws-secrets \
   --from-literal=access-key-id=your-aws-access-key \
   --from-literal=secret-access-key=your-aws-secret-key \
