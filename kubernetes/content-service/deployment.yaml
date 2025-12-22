@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: content-service
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-content-service:latest
+        image: 245872626968.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-content-service:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -31,6 +31,10 @@ spec:
           value: "docker"
         - name: CONFIG_SERVER_URI
           value: ""  # Disabled - using local config
+        - name: SPRING_CLOUD_CONFIG_ENABLED
+          value: "false"  # Disable Config Server
+        - name: SPRING_CONFIG_IMPORT
+          value: ""  # Disable config import
         - name: EUREKA_CLIENT_ENABLED
           value: "false"  # Disabled - using Kubernetes service discovery
         - name: GATEWAY_HMAC_SECRET
@@ -128,14 +132,6 @@ spec:
             secretKeyRef:
               name: aws-secrets
               key: secret-access-key
-        - name: MAIL_HOST
-          value: "smtp.gmail.com"
-        - name: MAIL_PORT
-          value: "465"
-        - name: MAIL_USERNAME
-          value: ""
-        - name: MAIL_PASSWORD
-          value: ""
         resources:
           requests:
             memory: "256Mi"

@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: api-gateway
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-api-gateway:latest
+        image: 245872626968.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-api-gateway:latest
         imagePullPolicy: Always
         ports:
         - name: http

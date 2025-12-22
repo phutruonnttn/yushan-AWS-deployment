@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-user-service:latest
+        image: 245872626968.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-user-service:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -101,13 +101,19 @@ spec:
               name: kafka-config
               key: bootstrap-servers
         - name: MAIL_HOST
-          value: "smtp.gmail.com"
+          value: "smtp.qq.com"
         - name: MAIL_PORT
           value: "465"
         - name: MAIL_USERNAME
-          value: ""
+          valueFrom:
+            secretKeyRef:
+              name: mail-secrets
+              key: username
         - name: MAIL_PASSWORD
-          value: ""
+          valueFrom:
+            secretKeyRef:
+              name: mail-secrets
+              key: password
         resources:
           requests:
             memory: "256Mi"

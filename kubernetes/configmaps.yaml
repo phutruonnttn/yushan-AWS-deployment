@@ -1,6 +1,6 @@
 # ConfigMaps for AWS Endpoints
-# NOTE: Replace placeholder values with actual AWS endpoints from Terraform outputs
-# Run: ./scripts/extract-aws-endpoints.sh to get endpoints
+# NOTE: These values are extracted from Terraform outputs
+# To update: Run ./scripts/extract-aws-endpoints.sh or use the update-configmaps-fixed.sh script
 
 apiVersion: v1
 kind: ConfigMap
@@ -8,17 +8,17 @@ metadata:
   name: database-config
   namespace: yushan
 data:
-  # RDS PostgreSQL Endpoints (replace with actual endpoints from Terraform outputs)
-  user-service-db-host: "REPLACE_WITH_USER_SERVICE_DB_ENDPOINT"
-  user-service-db-url: "jdbc:postgresql://REPLACE_WITH_USER_SERVICE_DB_ENDPOINT:5432/user_service"
-  content-service-db-host: "REPLACE_WITH_CONTENT_SERVICE_DB_ENDPOINT"
-  content-service-db-url: "jdbc:postgresql://REPLACE_WITH_CONTENT_SERVICE_DB_ENDPOINT:5432/content_service"
-  engagement-service-db-host: "REPLACE_WITH_ENGAGEMENT_SERVICE_DB_ENDPOINT"
-  engagement-service-db-url: "jdbc:postgresql://REPLACE_WITH_ENGAGEMENT_SERVICE_DB_ENDPOINT:5432/engagement_service"
-  gamification-service-db-host: "REPLACE_WITH_GAMIFICATION_SERVICE_DB_ENDPOINT"
-  gamification-service-db-url: "jdbc:postgresql://REPLACE_WITH_GAMIFICATION_SERVICE_DB_ENDPOINT:5432/gamification_service"
-  analytics-service-db-host: "REPLACE_WITH_ANALYTICS_SERVICE_DB_ENDPOINT"
-  analytics-service-db-url: "jdbc:postgresql://REPLACE_WITH_ANALYTICS_SERVICE_DB_ENDPOINT:5432/analytics_service"
+  # RDS PostgreSQL Endpoints (Database-per-Service pattern)
+  user-service-db-host: "yushan-development-yushan-user-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com"
+  user-service-db-url: "jdbc:postgresql://yushan-development-yushan-user-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com:5432/user_service"
+  content-service-db-host: "yushan-development-yushan-content-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com"
+  content-service-db-url: "jdbc:postgresql://yushan-development-yushan-content-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com:5432/content_service"
+  engagement-service-db-host: "yushan-development-yushan-engagement-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com"
+  engagement-service-db-url: "jdbc:postgresql://yushan-development-yushan-engagement-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com:5432/engagement_service"
+  gamification-service-db-host: "yushan-development-yushan-gamification-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com"
+  gamification-service-db-url: "jdbc:postgresql://yushan-development-yushan-gamification-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com:5432/gamification_service"
+  analytics-service-db-host: "yushan-development-yushan-analytics-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com"
+  analytics-service-db-url: "jdbc:postgresql://yushan-development-yushan-analytics-db.cbka2q6q6ot2.ap-southeast-1.rds.amazonaws.com:5432/analytics_service"
 
 ---
 apiVersion: v1
@@ -27,12 +27,12 @@ metadata:
   name: redis-config
   namespace: yushan
 data:
-  # ElastiCache Redis Endpoints (replace with actual endpoints from Terraform outputs)
-  user-service-redis-host: "REPLACE_WITH_USER_SERVICE_REDIS_ENDPOINT"
-  content-service-redis-host: "REPLACE_WITH_CONTENT_SERVICE_REDIS_ENDPOINT"
-  engagement-service-redis-host: "REPLACE_WITH_ENGAGEMENT_SERVICE_REDIS_ENDPOINT"
-  gamification-service-redis-host: "REPLACE_WITH_GAMIFICATION_SERVICE_REDIS_ENDPOINT"
-  analytics-service-redis-host: "REPLACE_WITH_ANALYTICS_SERVICE_REDIS_ENDPOINT"
+  # ElastiCache Redis Endpoints (Database-per-Service pattern)
+  user-service-redis-host: "yushan-development-user-service.281gkz.ng.0001.apse1.cache.amazonaws.com"
+  content-service-redis-host: "yushan-development-content-service.281gkz.ng.0001.apse1.cache.amazonaws.com"
+  engagement-service-redis-host: "yushan-development-engagement-service.281gkz.ng.0001.apse1.cache.amazonaws.com"
+  gamification-service-redis-host: "yushan-development-gamification-service.281gkz.ng.0001.apse1.cache.amazonaws.com"
+  analytics-service-redis-host: "yushan-development-analytics-service.281gkz.ng.0001.apse1.cache.amazonaws.com"
 
 ---
 apiVersion: v1
@@ -41,8 +41,8 @@ metadata:
   name: kafka-config
   namespace: yushan
 data:
-  # Kafka Bootstrap Servers (replace with actual private IPs from Terraform outputs)
-  bootstrap-servers: "REPLACE_WITH_KAFKA_BOOTSTRAP_SERVERS"
+  # Kafka Bootstrap Servers (3 brokers in Multi-AZ)
+  bootstrap-servers: "10.0.10.210:9092,10.0.11.92:9092,10.0.12.142:9092"
 
 ---
 apiVersion: v1

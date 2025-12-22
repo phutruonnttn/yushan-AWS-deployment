@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: analytics-service
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-analytics-service:latest
+        image: 245872626968.dkr.ecr.ap-southeast-1.amazonaws.com/yushan-development-analytics-service:latest
         imagePullPolicy: Always
         ports:
         - name: http
@@ -90,14 +90,6 @@ spec:
               key: analytics-service-redis-host
         - name: REDIS_PORT
           value: "6379"
-        - name: MAIL_HOST
-          value: "smtp.gmail.com"
-        - name: MAIL_PORT
-          value: "465"
-        - name: MAIL_USERNAME
-          value: ""
-        - name: MAIL_PASSWORD
-          value: ""
         resources:
           requests:
             memory: "256Mi"
